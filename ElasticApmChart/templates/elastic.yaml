@@ -1,0 +1,51 @@
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: quickstart
+spec:
+  version: 8.13.4
+  nodeSets:
+    - name: default
+      count: 3
+      config:
+        node.store.allow_mmap: false
+
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+config:
+  xpack.fleet.packages:
+    - name: apm
+      version: latest
+metadata:
+  name: quickstart
+spec:
+  version: 8.13.4
+  count: 6
+  elasticsearchRef:
+    name: "quickstart"
+
+---
+apiVersion: apm.k8s.elastic.co/v1
+kind: ApmServer
+metadata:
+  name: apm-server-quickstart
+spec:
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  config:
+    name: elastic-apm
+    apm-server:
+      rum.enabled: true
+      rum.allow_origins: ["*"]
+  version: 8.13.4
+  count: 3
+  elasticsearchRef:
+    name: "quickstart"
+  kibanaRef:
+    name: "quickstart"
+
+
