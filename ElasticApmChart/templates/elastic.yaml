@@ -39,6 +39,13 @@ spec:
   config:
     name: elastic-apm
     apm-server:
+      auth:
+        anonymous:
+          enabled: true
+          allow_agent:
+            - java
+            - otlp
+
       rum.enabled: true
       rum.allow_origins: ["*"]
   version: 8.13.4
@@ -47,5 +54,3 @@ spec:
     name: "quickstart"
   kibanaRef:
     name: "quickstart"
-
-
