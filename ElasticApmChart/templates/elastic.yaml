@@ -22,7 +22,7 @@ metadata:
   name: quickstart
 spec:
   version: 8.13.4
-  count: 1
+  count: 3
   elasticsearchRef:
     name: "quickstart"
 
@@ -45,11 +45,12 @@ spec:
           allow_agent:
             - java
             - otlp
+            - dotnet
 
       rum.enabled: true
       rum.allow_origins: ["*"]
   version: 8.13.4
-  count: 1
+  count: 3
   elasticsearchRef:
     name: "quickstart"
   kibanaRef:
