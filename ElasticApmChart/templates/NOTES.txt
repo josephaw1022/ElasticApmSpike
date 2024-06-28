@@ -1,1 +1,42 @@
+Instructions 
+
+
+1. Port forward Kibana
+
+- Open up another terminal tab and run the following command 
+
+ kubectl port-forward svc/quickstart-kb-http 5601:5601
+
+
+2. Port forward APM server
+
+- Open up another terminal tab and run the following command 
+
+kubectl port-forward svc/apm-server-quickstart-apm-http 8200:8200
+
+
+
+
+Kibana UI Credentials
+
+Username: elastic
+
+To obtain the Kibana password, use the appropriate command for your operating system:
+
+For Unix-like systems (Linux, macOS):
+kubectl get secret quickstart-es-elastic-user  -n elastic-apm -o jsonpath='{.data.elastic}' | base64 --decode
+
+For Windows PowerShell:
+kubectl get secret quickstart-es-elastic-user  -n elastic-apm -o jsonpath="{.data.elastic}" | % { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
+
+
+
+
+To obtain the APM server token manually, use the appropriate command for your operating system:
+
+For Unix-like systems (Linux, macOS):
+kubectl get secret apm-server-quickstart-apm-token -n elastic-apm -o jsonpath='{.data.secret-token}' | base64 --decode
+
+For Windows PowerShell:
+kubectl get secret apm-server-quickstart-apm-token -n elastic-apm -o jsonpath="{.data.secret-token}" | % { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
 
