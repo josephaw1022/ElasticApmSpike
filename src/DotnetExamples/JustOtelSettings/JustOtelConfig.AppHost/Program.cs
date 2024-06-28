@@ -10,12 +10,11 @@ builder.Configuration.GetSection("ElasticApm").Bind(elasticApmConfiguration);
 
 
 
-var apiService = builder.AddProject<Projects.JustOtelConfig_ApiService>("apiservice")/
+var apiService = builder.AddProject<Projects.JustOtelConfig_ApiService>("apiservice")
     .WithElasticApm(elasticApmConfiguration);
 
 builder.AddProject<Projects.JustOtelConfig_Web>("webfrontend")
     .WithExternalHttpEndpoints()
-    .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
     .WithReference(apiService)
     .WithElasticApm(elasticApmConfiguration);
 
@@ -31,11 +30,17 @@ public static class ElasticApmExtensions
         string endpoint = elasticApmConfiguration.Endpoint;
         string bearerToken = elasticApmConfiguration.BearerToken;
 
-        builder.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", endpoint);
+        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", endpoint);
 
-        builder.WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", $"Authorization = Bearer {bearerToken}");
+        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", $"Authorization = Bearer {bearerToken}");
 
-        builder.WithEnvironment("OTEL_EXPORTER_OTLP_PROTOCOL", "http");
+        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_PROTOCOL", "http");
+
+
+        builder.WithEnvironment("ElasticApm__ServerUrl", endpoint);
+        builder.WithEnvironment("ElasticApm__SecretToken", bearerToken);
+        builder.WithEnvironment("ElasticApm__TransactionSampleRate", "1.0");
+
 
         return builder;
     }
