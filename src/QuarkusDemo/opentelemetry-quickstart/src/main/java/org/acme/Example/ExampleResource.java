@@ -9,6 +9,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/example")
 public class ExampleResource {
@@ -21,7 +22,7 @@ public class ExampleResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public ExampleResponse Hello () {
+    public ExampleResponse Hello() {
         Log.info("We are in the ExampleResource class!");
 
         var command = new CreateExample();
@@ -29,5 +30,16 @@ public class ExampleResource {
         command.description = "This is an example command";
 
         return mediatorService.send(command);
+    }
+
+    @SuppressWarnings("null")
+    @GET
+    @Path("/error")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response throwError() {
+        Log.error("Throwing an intentional 500 error");
+
+
+        throw new RuntimeException("Intentional server error");
     }
 }

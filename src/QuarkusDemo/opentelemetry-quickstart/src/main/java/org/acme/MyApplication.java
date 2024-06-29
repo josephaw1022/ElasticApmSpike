@@ -15,11 +15,7 @@ public class MyApplication {
     public static void main(String[] args) {
 
         if (apmAttach) {
-            System.out.println("Attaching Elastic APM agent");
             ElasticApmAttacher.attach();
-        }
-        else { 
-            System.out.println("Not attaching Elastic APM agent");
         }
 
         Quarkus.run(args);
