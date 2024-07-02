@@ -30,11 +30,14 @@ public static class ElasticApmExtensions
         string endpoint = elasticApmConfiguration.Endpoint;
         string bearerToken = elasticApmConfiguration.BearerToken;
 
-        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", endpoint);
+        builder.WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", endpoint);
 
-        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", $"Authorization = Bearer {bearerToken}");
+        builder.WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", $"Authorization = Bearer {bearerToken}");
 
-        // builder.WithEnvironment("OTEL_EXPORTER_OTLP_PROTOCOL", "http");
+        builder.WithEnvironment("OTEL_EXPORTER_OTLP_PROTOCOL", "http");
+        builder.WithEnvironment("OTEL_METRICS_EXPORTER", "otlp");
+        builder.WithEnvironment("OTEL_TRACES_EXPORTER", "otlp");
+        builder.WithEnvironment("OTEL_METRICS_EXPORTER", "otlp");
 
 
         builder.WithEnvironment("ElasticApm__ServerUrl", endpoint);

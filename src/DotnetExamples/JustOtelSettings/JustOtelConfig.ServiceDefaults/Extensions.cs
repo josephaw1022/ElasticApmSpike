@@ -102,9 +102,6 @@ public static class Extensions
     public static WebApplication MapDefaultEndpoints(this WebApplication app)
     {
 
-
-        app.UseAllElasticApm();
-
         app.MapPrometheusScrapingEndpoint();
 
         // Adding health checks endpoints to applications in non-development environments has security implications.
