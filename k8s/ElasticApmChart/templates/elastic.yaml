@@ -10,6 +10,17 @@ spec:
       count: 3
       config:
         node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          containers:
+          - name: elasticsearch
+            resources:
+              requests:
+                memory: 4Gi
+                cpu: 1
+              limits:
+                memory: 4Gi
+                cpu: 1
 
 ---
 apiVersion: kibana.k8s.elastic.co/v1
@@ -22,7 +33,7 @@ metadata:
   name: quickstart
 spec:
   version: 8.13.4
-  count: 3
+  count: 2
   elasticsearchRef:
     name: "quickstart"
 
@@ -39,17 +50,11 @@ spec:
   config:
     name: elastic-apm
     apm-server:
-      auth:
-        anonymous:
-          enabled: true
-          allow_agent:
-            - java
-            - otlp
-            - dotnet
+      auth.anonymous.enabled: true
       rum.enabled: true
       rum.allow_origins: ["*"]
   version: 8.13.4
-  count: 2
+  count: 1
   elasticsearchRef:
     name: "quickstart"
   kibanaRef:
